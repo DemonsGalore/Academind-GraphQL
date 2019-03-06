@@ -1,0 +1,36 @@
+{
+  "name": "academind-graphql",
+  "version": "0.0.1",
+  "description": "Academin GraphQL-Tutorial (Event Booking Application)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DemonsGalore/Academind-GraphQL.git"
+  },
+  "keywords": [
+    "GraphQL",
+    "React",
+    "MongoDB",
+    "Node.js"
+  ],
+  "author": "Andreas Stopat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DemonsGalore/Academind-GraphQL/issues"
+  },
+  "homepage": "https://github.com/DemonsGalore/Academind-GraphQL#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.1.1",
+    "mongoose": "^5.4.17"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
