@@ -17,6 +17,6 @@ const userSchema = new Schema({
       ref: 'events',
     }
   ],
-});
+}, { timestamps: true });
 
 module.exports = User = mongoose.model('users', userSchema);
