@@ -1,0 +1,12 @@
+mutation {
+  createUser(userInput: {
+    email:"andreas.stopat@demonsgalore.de",
+    password:"pass1234"
+  }) {
+    _id
+    email
+    password
+    updatedAt
+    createdAt
+  }
+}
