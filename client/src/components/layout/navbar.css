@@ -8,6 +8,7 @@ header {
   padding: 0 1rem;
   display: flex;
   align-items: center;
+  box-shadow: var(--shadow);
 }
 
 header div h1 {
