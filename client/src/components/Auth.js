@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import AuthContext from '../context/auth-context';
+
 import './auth.css';
 
 class Auth extends Component {
@@ -12,6 +14,8 @@ class Auth extends Component {
       errors: {},
     }
   }
+
+  static contextType = AuthContext;
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -64,6 +68,13 @@ class Auth extends Component {
     })
     .then(resData => {
       console.log(resData);
+      if (resData.data.login.token) {
+        this.context.login(
+          resData.data.login.userId,
+          resData.data.login.token,
+          resData.data.login.tokenExpiration,
+        );
+      }
     })
     .catch(err => {
       console.log(err);
