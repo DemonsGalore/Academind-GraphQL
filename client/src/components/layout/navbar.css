@@ -17,6 +17,10 @@ header div h1 {
   font-size: 1.5rem;
 }
 
+header div a {
+  text-decoration: none;
+}
+
 .nav-main {
   margin-left: 1.5rem;
 }

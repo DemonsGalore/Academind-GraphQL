@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import AuthContext from '../../context/auth-context';
 
@@ -10,8 +10,8 @@ const navbar = props => (
     {(context) => {
       return (
         <header>
-          <div className="">
-            <h1>EventApp</h1>
+          <div>
+            <Link to="/"><h1>EventApp</h1></Link>
           </div>
           <nav className="nav-main">
             <ul>

@@ -6,6 +6,7 @@ import Navbar from './components/layout/Navbar';
 import Auth from './components/Auth';
 import Bookings from './components/Bookings';
 import Events from './components/Events';
+import Home from './components/Home';
 import AuthContext from './context/auth-context';
 
 class App extends Component {
@@ -42,14 +43,8 @@ class App extends Component {
             <Navbar />
             <main>
               <Switch>
-                {!this.state.token &&
-                  <Redirect from="/" to="/auth" exact />
-                }
                 {this.state.token &&
-                  <Redirect from="/" to="/events" exact />
-                }
-                {this.state.token &&
-                  <Redirect from="/auth" to="/events" exact />
+                  <Redirect from="/auth" to="/" exact />
                 }
                 {!this.state.token &&
                   <Route path="/auth" component={Auth} />
@@ -58,7 +53,7 @@ class App extends Component {
                   <Route path="/bookings" component={Bookings} />
                 }
                 <Route path="/events" component={Events} />
-                <Route path="/" component={null} />
+                <Route path="/" component={Home} />
                 <Route path="/" component={null} />
               </Switch>
             </main>
