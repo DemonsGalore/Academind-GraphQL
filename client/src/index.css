@@ -62,8 +62,12 @@ p {
   font-size: 1.125rem;
 }
 
-a {
+a, button {
   transition: color 0.3s ease;
+}
+
+button:focus {
+  outline: 0;
 }
 
 ::selection {

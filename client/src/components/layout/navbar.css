@@ -1,4 +1,4 @@
-header {
+#root > header {
   position: fixed;
   left: 0;
   top: 0;
@@ -11,13 +11,13 @@ header {
   box-shadow: var(--shadow);
 }
 
-header div h1 {
+#root > header > div h1 {
   color: var(--secondary);
   margin: 0;
   font-size: 1.5rem;
 }
 
-header div a {
+#root > header > div a {
   text-decoration: none;
 }
 
@@ -25,22 +25,34 @@ header div a {
   margin-left: 1.5rem;
 }
 
-.nav-main ul {
+.nav-main > ul {
   display: flex;
   margin: 0;
   padding: 0;
   list-style: none;
+  align-items: center;
 }
 
 .nav-main li {
   margin: 0 1rem;
 }
 
-.nav-main a {
+.nav-main a, .nav-main button {
   text-decoration: none;
   color: var(--light);
+  padding: 0.25rem 0.5rem;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  background: transparent;
+  margin: 0;
 }
 
-.nav-main a:hover, .nav-main a:active, .nav-main a.active {
+.nav-main a:hover,
+.nav-main a:active,
+.nav-main a.active,
+.nav-main button:hover,
+.nav-main button:active {
   color: var(--accent);
 }

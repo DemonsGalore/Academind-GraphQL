@@ -113,10 +113,10 @@ class Auth extends Component {
           />
         </div>
         <div className="form-actions">
-          <button type="submit">Submit</button>
-            <button type="button" onClick={this.switchAuthMode}>
-              Switch to {this.state.isLogin ? 'SignUp' : 'SignIn'}
-            </button>
+          <button type="submit" className="btn">Submit</button>
+          <button type="button" className="btn" onClick={this.switchAuthMode}>
+            Switch to {this.state.isLogin ? 'SignUp' : 'SignIn'}
+          </button>
         </div>
       </form>
     );

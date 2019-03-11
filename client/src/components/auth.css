@@ -17,22 +17,3 @@
 .form-control {
   margin-bottom: 1rem;
 }
-
-.form-actions button {
-  background: var(--secondary);
-  font: inherit;
-  border: 1px solid var(--secondary);
-  color: var(--light);
-  border-radius: 0.3rem;
-  padding: 0.25rem 1rem;
-  margin-right: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-}
-
-.form-actions button:hover,
-.form-actions button:active {
-  background: var(--primary);
-  border: 1px solid var(--primary);
-}
