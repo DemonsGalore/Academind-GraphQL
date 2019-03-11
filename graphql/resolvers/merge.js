@@ -55,8 +55,8 @@ const transformEvent = event => {
   return {
     ...event._doc,
     _id: event.id,
-    date: new Date(event._doc.date).toISOString(),
-    creator: user.bind(this, event.creator),
+    date: dateToString(event._doc.date),
+    creator: user.bind(this, event._doc.creator),
     createdAt: dateToString(event._doc.createdAt),
     updatedAt: dateToString(event._doc.updatedAt),
   };

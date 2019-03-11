@@ -15,11 +15,11 @@ module.exports = {
       }
       const hashedPassword = await bcrypt.hash(password, 12);
 
-      const user = new User({
+      const newUser = new User({
         email,
         password: hashedPassword,
       });
-      const result = await user.save();
+      const result = await newUser.save();
 
       return {
         ...result._doc,

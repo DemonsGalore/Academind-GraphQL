@@ -12,7 +12,7 @@ class Auth extends Component {
       password: '',
       isLogin: true,
       errors: {},
-    }
+    };
   }
 
   static contextType = AuthContext;
@@ -76,8 +76,8 @@ class Auth extends Component {
         );
       }
     })
-    .catch(err => {
-      console.log(err);
+    .catch(error => {
+      console.log(error);
     });
   }
 

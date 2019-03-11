@@ -23,18 +23,18 @@ module.exports = {
     }
     const { eventId } = args;
     const fetchedEvent = await Event.findOne({ _id: eventId });
-    const booking = new Booking({
+    const newBooking = new Booking({
       user: userId,
       event: fetchedEvent,
     });
-    const result = await booking.save();
+    const result = await newBooking.save();
     return transformBooking(result);
   },
   cancelBooking: async (args, req) => {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-    const { bookingId } = args
+    const { bookingId } = args;
     try {
       const booking = await Booking.findById(bookingId).populate('event');
       const event = transformEvent(booking.event);

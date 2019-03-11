@@ -20,10 +20,10 @@ module.exports = {
     }
     const { title, description, price, date } = args.eventInput;
 
-    const event = new Event({
+    const newEvent = new Event({
       title,
       description,
-      price,
+      price: +price,
       date: new Date(date),
       creator: userId,
     });
@@ -31,7 +31,7 @@ module.exports = {
     let createdEvent;
 
     try {
-      const result = await event.save();
+      const result = await newEvent.save();
       createdEvent = transformEvent(result);
       const creator = await User.findById(userId)
 
