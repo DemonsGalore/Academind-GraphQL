@@ -3,7 +3,10 @@ import Modal from './modal/Modal';
 import Backdrop from './backdrop/Backdrop';
 import AuthContext from '../context/auth-context';
 
-import './events.css';
+import EventList from './Events/EventList';
+import Spinner from './common/Spinner/Spinner';
+
+import './Events.css';
 
 class Events extends Component {
   static contextType = AuthContext;
@@ -13,6 +16,8 @@ class Events extends Component {
     this.state = {
       creating: false,
       events: [],
+      isLoading: false,
+      selectedEvent: null,
       title: '',
       price: 0,
       date: '',
@@ -38,7 +43,8 @@ class Events extends Component {
 
     // TODO: validation
 
-    const { title, price, date, description } = this.state;
+    // let because +price
+    let { title, price, date, description } = this.state;
 
     const requestBody = {
       query: `
@@ -75,7 +81,20 @@ class Events extends Component {
       return res.json();
     })
     .then(resData => {
-      this.getEvents();
+      this.setState(prevState => {
+        const updatedEvents = [...prevState.events];
+        updatedEvents.push({
+          _id: resData.data.createEvent._id,
+          title: resData.data.createEvent.title,
+          description: resData.data.createEvent.description,
+          date: resData.data.createEvent.date,
+          price: resData.data.createEvent.price,
+          creator: {
+            _id: this.context.userId
+          }
+        });
+        return {events: updatedEvents};
+      });
     })
     .catch(err => {
       console.log(err);
@@ -83,10 +102,14 @@ class Events extends Component {
   };
 
   onModalCancel = () => {
-    this.setState({ creating: false });
+    this.setState({
+      creating: false,
+      selectedEvent: null
+    });
   };
 
   getEvents = () => {
+    this.setState({ isLoading: true });
     const requestBody = {
       query: `
         query {
@@ -119,79 +142,117 @@ class Events extends Component {
       return res.json();
     })
     .then(resData => {
-      console.log(resData);
       const events = resData.data.events;
-      this.setState({ events });
+      this.setState({
+        events,
+        isLoading: false,
+      });
     })
     .catch(error => {
+      this.setState({ isLoading: false });
       console.log(error);
     });
   };
 
+  viewDetails = eventId => {
+    this.setState(prevState => {
+      const selectedEvent = prevState.events.find(e => e._id === eventId);
+      return {selectedEvent};
+    });
+    console.log(this.state);
+  };
+
+  bookEvent = () => {};
+
   render() {
-    const eventList = this.state.events.map(event => {
-      return <li key={event._id}>{event.title}</li>;
-    })
-
-
     return (
       <Fragment>
-        {this.state.creating && <Backdrop />}
-        {this.state.creating && (
-          <Modal title="Add event" canCancel canConfirm onConfirm={this.onModalConfirm} onCancel={this.onModalCancel}>
-          <form>
-            <div className="form-control">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={this.state.title}
-                onChange={this.onChange}
-              />
-            </div>
-            <div className="form-control">
-              <label htmlFor="price">Price</label>
-              <input
-                type="number"
-                id="price"
-                name="price"
-                value={this.state.price}
-                onChange={this.onChange}
-              />
-            </div>
-            <div className="form-control">
-              <label htmlFor="date">Date</label>
-              <input
-                type="date"
-                id="date"
-                name="date"
-                value={this.state.date}
-                onChange={this.onChange}
-              />
-            </div>
-            <div className="form-control">
-              <label htmlFor="description">Description</label>
-              <textarea
-                id="description"
-                name="description"
-                rows="4"
-                value={this.state.description}
-                onChange={this.onChange}
-              />
-            </div>
-          </form>
+        {(this.state.creating || this.state.selectedEvent) && <Backdrop />}
+        {this.state.creating &&
+          <Modal
+            title="Add event"
+            canConfirm
+            canCancel
+            onConfirm={this.onModalConfirm}
+            onCancel={this.onModalCancel}
+            confirmText="Confirm"
+          >
+            <form>
+              <div className="form-control">
+                <label htmlFor="title">Title</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  value={this.state.title}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="form-control">
+                <label htmlFor="price">Price</label>
+                <input
+                  type="number"
+                  id="price"
+                  name="price"
+                  value={+this.state.price}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="form-control">
+                <label htmlFor="date">Date</label>
+                <input
+                  type="date"
+                  id="date"
+                  name="date"
+                  value={this.state.date}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="form-control">
+                <label htmlFor="description">Description</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  rows="4"
+                  value={this.state.description}
+                  onChange={this.onChange}
+                />
+              </div>
+            </form>
           </Modal>
-        )}
+        }
+        {this.state.selectedEvent &&
+          <Modal
+            title={this.state.selectedEvent.title}
+            canConfirm
+            canCancel
+            onConfirm={this.bookEvent}
+            onCancel={this.onModalCancel}
+            confirmText="Book"
+          >
+            <h3>{this.state.selectedEvent.title}</h3>
+            <h5>
+              {this.state.selectedEvent.price} € -
+              {new Date(this.state.selectedEvent.date).toLocaleDateString()}
+            </h5>
+            <p>{this.state.selectedEvent.description}</p>
+          </Modal>
+        }
         {this.context.token && (
           <div className="events-control">
             <p>Share your own events!</p>
             <button className="btn" onClick={this.onCreateEvent}>Create event</button>
           </div>
         )}
-        <ul className="events-list">
-          {eventList}
-        </ul>
+        {this.state.isLoading ? (
+          <Spinner />
+        ) : (
+          <EventList
+            events={this.state.events}
+            authUserId={this.context.userId}
+            onViewDetails={this.viewDetails}
+          />
+        )}
       </Fragment>
     );
   }

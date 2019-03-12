@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './modal.css';
+import './Modal.css';
 
 const modal = props => (
   <div className="modal">
@@ -9,8 +9,16 @@ const modal = props => (
       {props.children}
     </section>
     <section className="modal-actions">
-      {props.canCancel && <button className="btn" onClick={props.onCancel}>Cancel</button>}
-      {props.canConfirm && <button className="btn" onClick={props.onConfirm}>Confirm</button>}
+      {props.canConfirm &&
+        <button className="btn" onClick={props.onConfirm}>
+          {props.confirmText}
+        </button>
+      }
+      {props.canCancel &&
+        <button className="btn" onClick={props.onCancel}>
+          Cancel
+        </button>
+      }
     </section>
   </div>
 );
