@@ -3,8 +3,9 @@
   background: var(--light);
   box-shadow: var(--shadow);
   position: fixed;
-  top: 20vh;
+  top: 15vh;
   left: 5%;
+  z-index: 100;
 }
 
 .modal > header {

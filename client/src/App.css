@@ -23,6 +23,10 @@
   display: block;
 }
 
+.form-control textarea {
+  max-width: 100%;
+}
+
 .form-control label {
   margin-bottom: 0.5rem;
 }

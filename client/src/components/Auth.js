@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import AuthContext from '../context/auth-context';
 
-import './auth.css';
+import './Auth.css';
 
 class Auth extends Component {
   constructor(props) {
@@ -25,8 +25,6 @@ class Auth extends Component {
     e.preventDefault();
 
     const { email, password } = this.state;
-    console.log("EMAIL", email);
-    console.log("Password", password);
 
     let requestBody = {
       query: `
@@ -67,7 +65,6 @@ class Auth extends Component {
       return res.json();
     })
     .then(resData => {
-      console.log(resData);
       if (resData.data.login.token) {
         this.context.login(
           resData.data.login.userId,
@@ -83,7 +80,7 @@ class Auth extends Component {
 
   switchAuthMode = () => {
     this.setState(prevState => {
-      return { isLogin: !prevState.isLogin }
+      return { isLogin: !prevState.isLogin };
     })
   }
 

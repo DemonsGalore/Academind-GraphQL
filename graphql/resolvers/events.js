@@ -38,7 +38,7 @@ module.exports = {
       if (!creator) {
         throw new Error('User not found.');
       }
-      creator.createdEvents.push(event);
+      creator.createdEvents.push(newEvent);
       await creator.save();
 
       return createdEvent;
