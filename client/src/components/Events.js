@@ -21,7 +21,7 @@ class Events extends Component {
       isLoading: false,
       selectedEvent: null,
       title: '',
-      price: 0,
+      price: '',
       date: '',
       description: '',
       errors: {},
@@ -49,9 +49,15 @@ class Events extends Component {
     let { title, price, date, description } = this.state;
 
     const requestBody = {
+      variables: {
+        title,
+        price: +price,
+        date,
+        description,
+      },
       query: `
-        mutation {
-          createEvent(eventInput: {title: "${title}", description: "${description}", price: ${+price}, date: "${date}"}) {
+        mutation CreateEvent($title: String!, $description: String!, $price: Float!, $date: String!) {
+          createEvent(eventInput: {title: $title, description: $description, price: $price, date: $date}) {
             _id
             title
             price
@@ -165,7 +171,6 @@ class Events extends Component {
       const selectedEvent = prevState.events.find(e => e._id === eventId);
       return {selectedEvent};
     });
-    console.log(this.state);
   };
 
   bookEvent = () => {
@@ -174,9 +179,12 @@ class Events extends Component {
       return;
     }
     const requestBody = {
+      variables: {
+        id: this.state.selectedEvent._id,
+      },
       query: `
-        mutation {
-          bookEvent(eventId: "${this.state.selectedEvent._id}") {
+        mutation BookEvent($id: ID!) {
+          bookEvent(eventId: $id) {
             _id
             createdAt
             updatedAt

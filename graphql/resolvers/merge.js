@@ -11,7 +11,6 @@ const eventLoader = new DataLoader(eventIds => {
 });
 
 const userLoader = new DataLoader(userIds => {
-  console.log(userIds);
   return User.find({_id: {$in: userIds}});
 });
 
@@ -42,7 +41,7 @@ const user = async userId => {
       ...user._doc,
       _id: user.id,
       password: null,
-      createdEvents: () => eventLoader.loadMany(this, user._doc.createdEvents),
+      createdEvents: () => eventLoader.loadMany(user._doc.createdEvents),
       createdAt: dateToString(user._doc.createdAt),
       updatedAt: dateToString(user._doc.updatedAt),
     };

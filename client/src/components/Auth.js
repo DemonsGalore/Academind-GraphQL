@@ -27,9 +27,13 @@ class Auth extends Component {
     const { email, password } = this.state;
 
     let requestBody = {
+      variables: {
+        email,
+        password,
+      },
       query: `
-        query {
-          login(email: "${email}", password: "${password}") {
+        query Login($email: String!, $password: String!) {
+          login(email: $email, password: $password) {
             userId
             token
             tokenExpiration
@@ -40,9 +44,13 @@ class Auth extends Component {
 
     if (!this.state.isLogin) {
       requestBody = {
+        variables: {
+          email: email,
+          password: password,
+        },
         query: `
-          mutation {
-            createUser(userInput: {email: "${email}", password: "${password}"}) {
+          mutation CreateUser($email: String!, $password: String!) {
+            createUser(userInput: {email: $email, password: $password}) {
               _id
               email
             }

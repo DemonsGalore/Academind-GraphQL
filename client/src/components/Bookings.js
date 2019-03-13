@@ -70,9 +70,12 @@ class Bookings extends Component {
     // TODO: loading spinner necessary?
     this.setState({ isLoading: true });
     const requestBody = {
+      variables: {
+        id: bookingId
+      },
       query: `
-        mutation {
-          cancelBooking(bookingId: "${bookingId}") {
+        mutation CancelBooking($id: ID!) {
+          cancelBooking(bookingId: $id) {
             _id
             title
           }
