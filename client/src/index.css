@@ -67,7 +67,7 @@ a, button {
 }
 
 button:focus {
-  outline: 0;
+  outline: none;
 }
 
 ::selection {
